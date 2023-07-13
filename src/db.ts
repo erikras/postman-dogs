@@ -1,62 +1,44 @@
-import { promises as fs } from "fs";
-import path from "path";
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
-import { Database, Dog, breeds, databaseSchema } from "./types";
+import { breeds } from "./types";
+import { DogsRecord, getXataClient } from "./xata";
+const xata = getXataClient();
+
+export type Dog = Omit<DogsRecord, "xata">;
 
 const dogImageApiSchema = z.object({
   message: z.string().url(),
   status: z.literal("success"),
 });
 
-export async function getAllDogs(): Promise<Database> {
-  return databaseSchema.parse(
-    JSON.parse(
-      await fs.readFile(path.join(process.cwd(), "database.json"), "utf8"),
-    ),
+export async function getAllDogs(): Promise<Dog[]> {
+  return (await xata.db.dogs.getMany()).map(
+    ({ xata: _metadata, ...dog }) => dog,
   );
 }
 
-async function writeAllDogs(database: Database): Promise<void> {
-  await fs.writeFile(
-    path.join(process.cwd(), "database.json"),
-    JSON.stringify(database, undefined, 2),
-  );
-}
-
-export async function getDog(id: Dog["id"]): Promise<Dog | undefined> {
-  return (await getAllDogs()).find((dog) => dog.id === id);
+export async function getDog(id: Dog["id"]): Promise<Dog | null> {
+  const record = await xata.db.dogs.read(id);
+  if (!record) return null;
+  const { xata: _metadata, ...dog } = record;
+  return dog;
 }
 
 export async function addDog(dog: Omit<Dog, "id" | "image">): Promise<void> {
-  const database = await getAllDogs();
-  database.push({
+  await xata.db.dogs.create({
     ...dog,
     image: await getImage(dog.breed),
     id: uuid(),
   });
-  await writeAllDogs(database);
 }
 
-export async function removeDog(dog: Dog["id"]): Promise<boolean> {
-  const database = await getAllDogs();
-  const index = database.findIndex((d) => d.id === dog);
-  if (index === -1) return false;
-  database.splice(index, 1);
-  await writeAllDogs(database);
+export async function removeDog(dogId: Dog["id"]): Promise<boolean> {
+  await xata.db.dogs.delete(dogId);
   return true;
 }
 
 export async function updateDog(dog: Dog): Promise<boolean> {
-  const database = await getAllDogs();
-  const index = database.findIndex((d) => d.id === dog.id);
-  if (index === -1) return false;
-  const existingDog = database[index];
-  if (existingDog.breed !== dog.breed) {
-    dog.image = await getImage(dog.breed);
-  }
-  database[index] = dog;
-  await writeAllDogs(database);
+  await xata.db.dogs.update(dog);
   return true;
 }
 

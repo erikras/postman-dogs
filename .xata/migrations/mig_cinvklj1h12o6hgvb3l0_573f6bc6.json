@@ -1,0 +1,18 @@
+{
+  "id": "mig_cinvklj1h12o6hgvb3l0",
+  "parentID": "mig_cinvkhj1h12o6hgvb3k0",
+  "checksum": "1:573f6bc609a42f49ab585babf720e195e89c76e3da03301e7023e2001b3b2c9c",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "age",
+          "type": "int",
+          "notNull": true,
+          "defaultValue": "0"
+        },
+        "table": "dogs"
+      }
+    }
+  ]
+}

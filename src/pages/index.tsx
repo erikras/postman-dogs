@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { getAllDogs } from "../db";
 import { Dog } from "../types";
+import { DogsRecord } from "../xata";
 import styles from "./index.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -68,12 +69,8 @@ export default function Index({ dogs: loadedDogs }: { dogs: Dog[] }) {
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  dogs: Dog[];
+  dogs: Omit<DogsRecord, "xata">[];
 }> = async () => {
   const dogs = await getAllDogs();
-  return {
-    props: {
-      dogs,
-    },
-  };
+  return { props: { dogs } };
 };
