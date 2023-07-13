@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://erikras-90i0hi.us-east-1.xata.sh/db/postman-dogs",
+  "codegen": {
+    "output": "src/xata.ts"
+  }
+}

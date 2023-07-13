@@ -1,0 +1,16 @@
+{
+  "id": "mig_cinvkonm8ge8mf3gmaj0",
+  "parentID": "mig_cinvklj1h12o6hgvb3l0",
+  "checksum": "1:df23d7d0684a66226a439a22530816b9b1cf3164ea5f30d5f67873adc703ab66",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "breed",
+          "type": "multiple"
+        },
+        "table": "dogs"
+      }
+    }
+  ]
+}

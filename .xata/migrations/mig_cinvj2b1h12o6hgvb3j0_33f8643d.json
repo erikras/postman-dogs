@@ -1,0 +1,11 @@
+{
+  "id": "mig_cinvj2b1h12o6hgvb3j0",
+  "checksum": "1:33f8643d422c1b87018235a3ac282365612d652d2a51ed41a762b1fc19b9348f",
+  "operations": [
+    {
+      "addTable": {
+        "table": "dogs"
+      }
+    }
+  ]
+}

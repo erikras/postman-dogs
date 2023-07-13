@@ -7,6 +7,7 @@ import DogForm, { DogWithOptionalId } from "../components/DogForm";
 import { getDog } from "../db";
 import { Dog } from "../types";
 import styles from "./index.module.css";
+import { DogsRecord } from "../xata";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,10 +34,9 @@ const paramsSchema = z.object({
   id: z.string().uuid(),
 });
 
-export const getServerSideProps: GetServerSideProps<{ dog: Dog }> = async ({
-  params,
-  res,
-}) => {
+export const getServerSideProps: GetServerSideProps<{
+  dog: Omit<DogsRecord, "xata">;
+}> = async ({ params, res }) => {
   const { id } = paramsSchema.parse(params);
   const dog = await getDog(id);
   if (!dog) {
