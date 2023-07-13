@@ -1,0 +1,62 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 500px;
+  margin: 10px auto;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.main > a {
+  text-decoration: none;
+  width: 100px;
+  text-align: center;
+  margin: 10px auto 30px auto;
+  padding: 10px;
+  border-radius: 5px;
+  background: linear-gradient(#6371c7, #5563c1);
+  color: white;
+}
+
+.main table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.main td,
+.main th {
+  text-align: left;
+  padding: 5px;
+  user-select: none;
+  border-bottom: 1px solid #ddd;
+  height: 25px;
+  position: relative;
+}
+
+.main td.age,
+.main th.age,
+.main td.removeColumn {
+  text-align: right;
+}
+.main td.image,
+.main th.image {
+  width: 45px;
+}
+
+.main tr:hover td {
+  background: #f1f1f1;
+  cursor: pointer;
+}
+
+.main button {
+  cursor: pointer;
+}
+
+.main table img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-height: 35px;
+  max-width: 45px;
+}
