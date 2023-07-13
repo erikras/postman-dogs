@@ -1,10 +1,12 @@
 import { v4 as uuid } from "uuid";
 import { z } from "zod";
-import { breeds } from "./types";
+import { breedSchema, breeds } from "./types";
 import { DogsRecord, getXataClient } from "./xata";
 const xata = getXataClient();
 
-export type Dog = Omit<DogsRecord, "xata">;
+export interface Dog extends Omit<DogsRecord, "xata" | "breed"> {
+  breed: keyof typeof breeds;
+}
 
 const dogImageApiSchema = z.object({
   message: z.string().url(),
@@ -13,7 +15,8 @@ const dogImageApiSchema = z.object({
 
 export async function getAllDogs(): Promise<Dog[]> {
   return (await xata.db.dogs.getMany()).map(
-    ({ xata: _metadata, ...dog }) => dog,
+    ({ xata: _metadata, ...dog }) =>
+      ({ ...dog, breed: breedSchema.parse(dog.breed) }) as Dog,
   );
 }
 
@@ -21,7 +24,7 @@ export async function getDog(id: Dog["id"]): Promise<Dog | null> {
   const record = await xata.db.dogs.read(id);
   if (!record) return null;
   const { xata: _metadata, ...dog } = record;
-  return dog;
+  return { ...dog, breed: breedSchema.parse(dog.breed) };
 }
 
 export async function addDog(dog: Omit<Dog, "id" | "image">): Promise<void> {

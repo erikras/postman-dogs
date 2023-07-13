@@ -149,6 +149,7 @@ export const breedSchema = z.union([
   z.literal("Weimaraner"),
   z.literal("Whippet"),
 ]);
+export type Breed = z.infer<typeof breedSchema>;
 
 export const breeds = {
   Affenpinscher: "affenpinscher",
