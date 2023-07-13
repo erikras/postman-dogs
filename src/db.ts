@@ -43,6 +43,7 @@ export async function updateDog(dog: Dog): Promise<boolean> {
 }
 
 async function getImage(breed: Dog["breed"]) {
+  if (!breed) return "";
   const json = await (
     await fetch(`https://dog.ceo/api/breed/${breeds[breed]}/images/random`)
   ).json();
