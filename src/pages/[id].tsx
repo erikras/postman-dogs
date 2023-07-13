@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { z } from "zod";
 import DogForm, { DogWithOptionalId } from "../components/DogForm";
-import { getDog } from "../db";
-import { Dog } from "../types";
+import { getDog, Dog } from "../db";
 import styles from "./index.module.css";
 import { DogsRecord } from "../xata";
 
@@ -35,7 +34,7 @@ const paramsSchema = z.object({
 });
 
 export const getServerSideProps: GetServerSideProps<{
-  dog: Omit<DogsRecord, "xata">;
+  dog: Dog;
 }> = async ({ params, res }) => {
   const { id } = paramsSchema.parse(params);
   const dog = await getDog(id);

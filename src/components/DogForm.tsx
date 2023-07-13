@@ -1,6 +1,7 @@
 import { Field, Form } from "react-final-form";
-import { Dog, breeds } from "../types";
+import { breeds } from "../types";
 import styles from "./DogForm.module.css";
+import { Dog } from "../db";
 
 export type DogWithOptionalId = Omit<Dog, "id"> & { id?: string };
 

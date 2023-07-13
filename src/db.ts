@@ -4,7 +4,8 @@ import { breedSchema, breeds } from "./types";
 import { DogsRecord, getXataClient } from "./xata";
 const xata = getXataClient();
 
-export interface Dog extends Omit<DogsRecord, "xata" | "breed"> {
+export interface Dog
+  extends Pick<DogsRecord, "image" | "id" | "age" | "name" | "breed"> {
   breed: keyof typeof breeds;
 }
 

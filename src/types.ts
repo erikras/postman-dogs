@@ -308,7 +308,6 @@ export const dogSchema = z.object({
   age: z.number(),
   breed: breedSchema,
 });
-export type Dog = z.infer<typeof dogSchema>;
 
 export const dogToCreateSchema = dogSchema.omit({ id: true, image: true });
 

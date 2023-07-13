@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import DogForm, { DogWithOptionalId } from "../components/DogForm";
-import { Dog } from "../types";
+import { Dog } from "../db";
 import styles from "./index.module.css";
 
 const EMPTY: DogWithOptionalId = {
