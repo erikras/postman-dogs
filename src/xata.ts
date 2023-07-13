@@ -12,8 +12,8 @@ const tables = [
     columns: [
       { name: "name", type: "string", notNull: true, defaultValue: '""' },
       { name: "age", type: "int", notNull: true, defaultValue: "0" },
-      { name: "breed", type: "multiple" },
       { name: "image", type: "string", notNull: true, defaultValue: '""' },
+      { name: "breed", type: "string", notNull: true, defaultValue: "Mix" },
     ],
   },
 ] as const;
